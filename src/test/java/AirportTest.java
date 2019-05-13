@@ -28,11 +28,13 @@ public class AirportTest {
         airport.addHangar(hangar);
         hangar.addPlane(plane);
 
-        passenger1 = new Passenger(200.0);
+        passenger1 = new Passenger(190.0);
         passenger2 = new Passenger(400.0);
-        flight1 = airport.createFlight(plane, "BA 207", AirportCode.EDI, AirportCode.VIE, new DateTime(22, 8, 2019, 20, 40), new DateTime(22, 8, 2019, 23, 0));
-        flight2 = airport.createFlight(smallPlane, "BA 207", AirportCode.EDI, AirportCode.VIE, new DateTime(22, 8, 2019, 20, 40), new DateTime(22, 8, 2019, 23, 0));
+        flight1 = airport.createFlight("BA 207", AirportCode.EDI, AirportCode.VIE, new DateTime(22, 8, 2019, 20, 40), new DateTime(22, 8, 2019, 23, 0));
+        flight2 = airport.createFlight("BA 207", AirportCode.EDI, AirportCode.VIE, new DateTime(22, 8, 2019, 20, 40), new DateTime(22, 8, 2019, 23, 0));
 
+        airport.assignPlane(flight1);
+        airport.assignPlane(flight2);
     }
 
     @Test
@@ -42,18 +44,6 @@ public class AirportTest {
 
     @Test
     public void hasName() {assertEquals("Edinburgh", airport.getAirportCode()); }
-
-    @Test
-    public void canGetFirstPlaneFromHangar(){
-        Plane plane1 = airport.getPlaneFromHangar();
-        assertEquals(true, plane1 instanceof Plane);
-    }
-
-//    @Test
-//    public void canGetSpecifiedPlaneFromHangar(){
-//        Plane foundPlane = airport.findPlaneFromHangar(plane);
-//        assertEquals(true, foundPlane instanceof Plane);
-//    }
 
     @Test
     public void canCreateFlight(){
@@ -72,14 +62,22 @@ public class AirportTest {
         airport.sellTicket(flight2, passenger2, SeatCategory.ECONOMY);
         airport.sellTicket(flight2, passenger2, SeatCategory.ECONOMY);
 
+        System.out.println(flight2.getPlane().getType());
+
         assertEquals(2, flight2.ticketsIssuedCount());
     }
 
     @Test
     public void canSellTicketForFlight(){
+
         airport.sellTicket(flight1, passenger1, SeatCategory.ECONOMY);
         assertEquals(1, passenger1.ticketCount());
         assertEquals(90.0, passenger1.getBalance(), 0.01);
+    }
+
+    @Test
+    public void canAssignPlaneToFlight(){
+        assertEquals(true, flight1.getPlane() instanceof Plane);
     }
 
 }

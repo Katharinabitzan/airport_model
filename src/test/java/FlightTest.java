@@ -13,12 +13,12 @@ public class FlightTest {
     public void before(){
         airline = new Airline("British Airways");
         plane = new Plane(PlaneType.BOEING737, airline);
-        flight = new Flight(plane, "BA 207", AirportCode.EDI, AirportCode.VIE, new DateTime(22, 8, 2019, 20, 40), new DateTime(22, 8, 2019, 23, 0));
+        flight = new Flight("BA 207", AirportCode.EDI, AirportCode.VIE, new DateTime(22, 8, 2019, 20, 40), new DateTime(22, 8, 2019, 23, 0));
     }
 
     @Test
-    public void hasPlane(){
-        assertEquals(true, plane instanceof Plane);
+    public void startsWithoutPlane(){
+        assertEquals(null, flight.getPlane());
     }
 
     @Test

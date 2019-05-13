@@ -26,32 +26,44 @@ public class Airport {
         this.hangars.add(hangar);
     }
 
-    public Plane getPlaneFromHangar(){
-        return hangars.get(0).getOnePlane();
+    public Plane getPlaneFromHangar(String size){
+        Hangar hangar =  hangars.get(0);
+        Plane plane = hangar.getPlaneBySize(size);
     }
 
-    public Flight createFlight(Plane plane, String flightNumber, AirportCode origin, AirportCode destination, DateTime departure, DateTime arrival) {
-        return new Flight(plane, flightNumber, origin, destination, departure, arrival);
+    public Flight createFlight(String flightNumber, AirportCode origin, AirportCode destination, DateTime departure, DateTime arrival) {
+        return new Flight(flightNumber, origin, destination, departure, arrival);
+    }
+
+    public void assignPlane(Flight flight){
+        String size = null;
+        if (flight.getRegionOfOrigin() == flight.getRegionOfDestination() ){
+            size = "Small";
+        } else { size = "Medium"; }
+
+        Plane plane = getPlaneFromHangar(size);
+        flight.setPlane(plane);
     }
 
     public boolean flightFull(Flight flight) {
         return (flight.maxCapacity() <= flight.ticketsIssuedCount());
     }
 
-    public Ticket createTicket(SeatCategory seatCategory, Flight flight) {
-        double ticketPrice = setTicketPrice(seatCategory, flight);
-        return new Ticket(ticketPrice, seatCategory, flight);
+    public double setTicketPrice(Flight flight) {
+        return 100.0;
     }
 
-    public double setTicketPrice(SeatCategory seatCategory, Flight flight) {
-        return 100.0 + seatCategory.getCost();
+    public Ticket createTicket(SeatCategory seatCategory, Flight flight) {
+        double ticketPrice = setTicketPrice(flight);
+        return new Ticket(ticketPrice, seatCategory, flight);
     }
 
 
     public void sellTicket(Flight flight, Passenger passenger, SeatCategory seatCategory) {
-        double ticketPrice = setTicketPrice(seatCategory, flight);
-
-        if (!flightFull(flight) && !passenger.notEnoughBalance(ticketPrice)) {
+        double ticketPrice = setTicketPrice(flight);
+        double upgradePrice = seatCategory.getCost();
+        double totalPrice = ticketPrice + upgradePrice;
+        if (!flightFull(flight) && !passenger.notEnoughBalance(totalPrice)) {
             Ticket ticketCreated = createTicket(seatCategory, flight);
             passenger.buyTicket(ticketCreated);
             flight.addTicketIssued(ticketCreated);

@@ -29,7 +29,6 @@ public class Passenger {
     public void buyTicket(Ticket ticket) {
         this.tickets.add(ticket);
         this.balance -= ticket.getPrice();
-
     }
 
     public int ticketCount() {

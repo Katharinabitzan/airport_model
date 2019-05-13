@@ -26,4 +26,43 @@ public class Hangar {
     public Plane getOnePlane() {
         return planes.get(0);
     }
+
+    public Plane findPlaneByCapacity(int maxCapacity) {
+        Plane chosenPlane = null;
+        for (Plane plane : this.planes) {
+            if (plane.getCapacity() <= maxCapacity) {
+                {
+                    chosenPlane = plane;
+                }
+            }
+        }
+        if (chosenPlane != null) {
+            removePlane(chosenPlane);
+            return chosenPlane;
+
+        } else {
+            for (Plane plane : this.planes) {
+                if (plane.getCapacity() <= maxCapacity + 100) {
+                    chosenPlane = plane;
+                    removePlane(chosenPlane);
+                    return chosenPlane;
+                }
+            }
+            if (chosenPlane != null) {
+                removePlane(chosenPlane);
+                return chosenPlane;
+            }
+        }
+    }
+
+    public Plane getPlaneBySize(String planeSize) {
+        if (planeSize == "Small") {
+            return findPlaneByCapacity(100);
+        }
+        else if (planeSize == "Medium") {
+            return findPlaneByCapacity(200);
+        }
+            return findPlaneByCapacity(300);
+    }
+
 }

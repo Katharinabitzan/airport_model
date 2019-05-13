@@ -1,17 +1,20 @@
 public enum AirportCode {
-    VIE("Vienna", "Austria"),
-    EDI("Edinburgh", "Scotland"),
-    NBO("Nairobi", "Kenya"),
-    LTN("Luton", "England"),
-    GTW("Gatwick", "England"),
-    MUN("Munich", "Germany");
+    VIE("Vienna", "Austria", "Europe"),
+    EDI("Edinburgh", "Scotland", "Europe"),
+    NBO("Nairobi Jomo Kenyatta", "Kenya", "Africa"),
+    LTN("Luton", "England", "Europe"),
+    GTW("Gatwick", "England", "Europe"),
+    MEL("Melbourne", "Australia", "Australia"),
+    MUN("Munich", "Germany", "Europe");
 
     private final String name;
     private final String country;
+    private final String region;
 
-    AirportCode(String name, String country) {
+    AirportCode(String name, String country, String region) {
         this.name = name;
         this.country = country;
+        this.region = region;
     }
 
     public String getName() {
@@ -20,4 +23,5 @@ public enum AirportCode {
 
     public String getCountry() { return country; }
 
+    public String getRegion() {return region; }
 }

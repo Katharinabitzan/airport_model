@@ -9,7 +9,7 @@ public class Ticket {
     private ArrayList<Passenger> passengersOnTicket;
 
     public Ticket(double price, SeatCategory seatCategory, Flight flight) {
-        this.price = price;
+        this.price = price + seatCategory.getCost();
         this.seatCategory = seatCategory;
         this.flight = flight;
         this.passengersOnTicket = new ArrayList<>();

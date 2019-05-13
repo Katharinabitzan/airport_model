@@ -34,4 +34,8 @@ public class Plane {
     public void removeAllPassengers() {
         passengers.clear();
     }
+
+    public int getCapacity() {
+        return type.getCapacity();
+    }
 }

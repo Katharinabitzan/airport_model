@@ -10,14 +10,14 @@ public class Flight {
     private ArrayList<Ticket> ticketsIssued;
 
 
-    public Flight(Plane plane, String flightNumber, AirportCode origin, AirportCode destination, DateTime departure, DateTime arrival){
-        this.plane = plane;
+    public Flight(String flightNumber, AirportCode origin, AirportCode destination, DateTime departure, DateTime arrival){
         this.flightNumber = flightNumber;
         this.origin = origin;
         this.destination = destination;
         this.departure = departure;
         this.arrival = arrival;
         this.ticketsIssued = new ArrayList<>();
+        this.plane = null;
 
     }
 
@@ -56,4 +56,15 @@ public class Flight {
     }
 
     public void addTicketIssued(Ticket ticket) { ticketsIssued.add(ticket); }
+
+    public void setPlane(Plane plane) {this.plane = plane; }
+
+    public String getRegionOfOrigin() {
+        return origin.getRegion();
+    }
+
+    public String getRegionOfDestination() {
+        return destination.getRegion();
+    }
 }
+
